@@ -50,24 +50,54 @@
 
 			// color palette
 			var cp = {
-				history: ["#000000"], // black selected by default
+				history: ["red"], // black selected by default
 				options: [],
 				$container: $('#color-palette')
 			}
+      
 
 			// your rectangle gradient interaction goes in this function
 			// you may also add code outside of the function (e.g., global variables)
-			function myGradientInteraction(){
+			//cp.history.push('red');
+      //var color1='red';
+      //var color2= 'red';
+      
+      function myGradientInteraction(){
 				var tool = new paper.Tool();
+        var _path = new paper.Path();
+        _path.add(new paper.Point(200,200));
+        _path.add(new paper.Point(520,200));
+        _path.add(new paper.Point(520,450));
+        _path.add(new paper.Point(200,450));
+        _path.closed=true;
+        _path.fillColor='red';
+        _path.view.draw();
+        var initial;
+        
+        //var rectangle = new Rectangle(new Point(50, 50), new Point(500, 300));
+        //var path = new Path.Rectangle(rectangle);
+        //path.fillColor = 'red';
+        
+ 
 
 				tool.onMouseDown = function (event) {
+          //initial=event.point;
 
 				}
 
 				tool.onMouseUp = function (event) {
-					
-				}
-			}
+					var color1=cp.history[cp.history.length-2];
+          var color2=cp.history[cp.history.length-1];
+          path.fillColor={
+            gradient:{
+              stops:[color1,color2]
+            },
+            origin:event.downPoint,
+            destination:event.point
+          };
+				
+      }
+      }
 
 			// your custom interaction goes here!
 			// you may replace everything
