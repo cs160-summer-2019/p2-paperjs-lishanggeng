@@ -50,7 +50,7 @@
 
 			// color palette
 			var cp = {
-				history: ["red"], // black selected by default
+				history: [], // black selected by default
 				options: [],
 				$container: $('#color-palette')
 			}
@@ -58,12 +58,13 @@
 
 			// your rectangle gradient interaction goes in this function
 			// you may also add code outside of the function (e.g., global variables)
-			//cp.history.push('red');
+			cp.history.push('red')
+     
       //var color1='red';
       //var color2= 'red';
       
       function myGradientInteraction(){
-				var tool = new paper.Tool();
+				/*var tool = new paper.Tool();
         var _path = new paper.Path();
         _path.add(new paper.Point(200,200));
         _path.add(new paper.Point(520,200));
@@ -77,26 +78,69 @@
         //var rectangle = new Rectangle(new Point(50, 50), new Point(500, 300));
         //var path = new Path.Rectangle(rectangle);
         //path.fillColor = 'red';
-        
- 
-
+        var destination;
+          var origin;
+          var color1;
+          var color2;
 				tool.onMouseDown = function (event) {
-          //initial=event.point;
+          initial=event.downPoint;
+          if (cp.history.length<2){
+            color1 = cp.history[cp.history.length-1];
+          }else{
+            color1 = cp.history[cp.history.length-2]
+          }
 
+        
 				}
 
 				tool.onMouseUp = function (event) {
-					var color1=cp.history[cp.history.length-2];
-          var color2=cp.history[cp.history.length-1];
-          path.fillColor={
+					 //color1=cp.history[cp.history.length-2];
+           color2=cp.history[cp.history.length-1];
+           path.fillColor={
             gradient:{
               stops:[color1,color2]
             },
-            origin:event.downPoint,
+            origin:initial,
             destination:event.point
           };
 				
-      }
+      }*/
+        
+        
+        var tool = new paper.Tool();
+        var myCanvas=document.getElementById("myCanvas");
+        var a1;
+        var a2;
+        var b1;
+        var b2;
+        var point;
+        var index=1
+        tool.onMouseDown = function (event) {
+              point = event.downPoint;
+              a1 = point.x;
+              b1 = point.y;
+				}
+        tool.onMouseMove = function(event){
+          if(index==1){
+            var x=document.getElementById("myCanvas");
+            var contextx=x.getContext("2d");
+            contextx.fillStyle='red';
+             contextx.fillRect(200,300,250,150);
+            index=index+1;
+          }
+        }
+        
+				tool.onMouseUp = function (event) {
+           point = event.point;
+           var contextx=myCanvas.getContext("2d");
+           a2 = point.x;
+           b2 = point.y;
+          var gradient=contextx.createLinearGradient(a1,b1,a2,b2);
+          gradient.addColorStop(0,cp.history[cp.history.length - 2]);
+          gradient.addColorStop(1,cp.history[cp.history.length - 1]);
+          contextx.fillStyle=gradient;
+          contextx.fillRect(200,300,250,150);
+				}
       }
 
 			// your custom interaction goes here!
