@@ -6,6 +6,9 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   	<title>P3 Coloring</title>
 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="{% static 'coloring/vendors/jquery/jquery-3.3.1.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'coloring/vendors/paper/paper-full.min.js' %}"></script>
 
@@ -18,6 +21,10 @@
 			position: absolute;
 			top: 0;
 		}
+    
+    .bucket{
+      background-size: 20px 30px;
+    }
 
 		.swatch {
 			width: 24px;
@@ -35,6 +42,48 @@
 		    margin-right: auto;
 		    display: block;
 		}
+    
+    #addColor {
+      position: absolute;
+      right: 20px;
+      top: 100px;
+    }
+    
+    .right-align{
+      position: absolute;
+      right: 3px;
+      top: 100px;
+    }
+    
+    .btn-position{
+      position: relative;
+      left: 12px;
+      padding: 3px;
+    }
+    
+    .btn-circle.btn-xl {
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    border-radius: 35px;
+    font-size: 24px;
+    line-height: 1.33;
+    }
+    
+    .btn-one{
+      position: relative;
+      
+    }
+    
+    .btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+  }
 	</style>
 
 	<script type="text/javascript" canvas="canvas">
@@ -54,99 +103,11 @@
 				options: [],
 				$container: $('#color-palette')
 			}
-      
 
-			// your rectangle gradient interaction goes in this function
-			// you may also add code outside of the function (e.g., global variables)
-			cp.history.push('red')
-     
-      //var color1='red';
-      //var color2= 'red';
-      
-      function myGradientInteraction(){
-				/*var tool = new paper.Tool();
-        var _path = new paper.Path();
-        _path.add(new paper.Point(200,200));
-        _path.add(new paper.Point(520,200));
-        _path.add(new paper.Point(520,450));
-        _path.add(new paper.Point(200,450));
-        _path.closed=true;
-        _path.fillColor='red';
-        _path.view.draw();
-        var initial;
-        
-        //var rectangle = new Rectangle(new Point(50, 50), new Point(500, 300));
-        //var path = new Path.Rectangle(rectangle);
-        //path.fillColor = 'red';
-        var destination;
-          var origin;
-          var color1;
-          var color2;
-				tool.onMouseDown = function (event) {
-          initial=event.downPoint;
-          if (cp.history.length<2){
-            color1 = cp.history[cp.history.length-1];
-          }else{
-            color1 = cp.history[cp.history.length-2]
-          }
-
-        
-				}
-
-				tool.onMouseUp = function (event) {
-					 //color1=cp.history[cp.history.length-2];
-           color2=cp.history[cp.history.length-1];
-           path.fillColor={
-            gradient:{
-              stops:[color1,color2]
-            },
-            origin:initial,
-            destination:event.point
-          };
-				
-      }*/
-        
-        
-        var tool = new paper.Tool();
-        var myCanvas=document.getElementById("myCanvas");
-        var a1;
-        var a2;
-        var b1;
-        var b2;
-        var point;
-        var index=1
-        tool.onMouseDown = function (event) {
-              point = event.downPoint;
-              a1 = point.x;
-              b1 = point.y;
-				}
-        tool.onMouseMove = function(event){
-          if(index==1){
-            var x=document.getElementById("myCanvas");
-            var contextx=x.getContext("2d");
-            contextx.fillStyle='red';
-             contextx.fillRect(200,300,250,150);
-            index=index+1;
-          }
-        }
-        
-				tool.onMouseUp = function (event) {
-           point = event.point;
-           var contextx=myCanvas.getContext("2d");
-           a2 = point.x;
-           b2 = point.y;
-          var gradient=contextx.createLinearGradient(a1,b1,a2,b2);
-          gradient.addColorStop(0,cp.history[cp.history.length - 2]);
-          gradient.addColorStop(1,cp.history[cp.history.length - 1]);
-          contextx.fillStyle=gradient;
-          contextx.fillRect(200,300,250,150);
-				}
-      }
-
-			// your custom interaction goes here!
-			// you may replace everything
 			function myCustomInteraction() {
 				var tool = new paper.Tool();
+        var myCircle = new Path.Circle(new Point(100, 70), 50);
+myCircle.fillColor = 'black';
 
 				tool.onMouseDown = function (event) {
 				    var hit = mandala.item.hitTest(event.point, { tolerance: 10, fill: true });
@@ -187,6 +148,7 @@
 			function init(custom){
 				paper.setup(canvas);
 				getColorsCreatePalette();
+        
 
 				paper.project.importSVG(mandala.filePath, function(item) { 
 					mandala.item = item._children["design-freepik"];
@@ -218,5 +180,77 @@
 
 	<canvas id="myCanvas" width="750px" height="750px"></canvas>
 	<div id="color-palette"></div>
+  <div>
+    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+<g>
+	<g>
+		<path class="bucket" d="M445.63,151.704h-28.746C411.956,67.225,341.692,0,256,0S100.044,67.225,95.116,151.704H66.37
+			c-5.236,0-9.481,4.245-9.481,9.482v47.407c0,5.236,4.245,9.482,9.481,9.482H86.74l46.121,285.954
+			c0.741,4.595,4.708,7.972,9.361,7.972h227.556c4.653,0,8.62-3.377,9.361-7.972l46.121-285.954h20.369
+			c5.236,0,9.481-4.245,9.481-9.482v-47.407C455.111,155.949,450.866,151.704,445.63,151.704z M256,18.963
+			c75.232,0,136.971,58.728,141.871,132.741H114.129C119.029,77.691,180.768,18.963,256,18.963z M361.704,493.037H150.296
+			l-44.347-274.963h300.102L361.704,493.037z M436.148,199.111h-18.963H94.815H75.852v-28.444h360.296V199.111z"/>
+	</g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
+   
+
+  </div>
+  <div class="right-align">
+    <button type="button" class="btn btn-dark">+ Add Color</button>
+    <div class="btn-position">
+      <button type="button" class="btn btn-default btn-circle btn-xl"> 
+        b1
+      </button>
+    </div>
+    
+    <div class="btn-position">
+      <button type="button" class="btn btn-default btn-circle btn-xl"> 
+        b2
+      </button>
+    </div>
+    
+    <div class="btn-position">
+      <button type="button" class="btn btn-default btn-circle btn-xl"> 
+        b3
+      </button>
+    </div>
+  </div>
+  
+  
+    
+  
+ 
 </body>
 </html>
