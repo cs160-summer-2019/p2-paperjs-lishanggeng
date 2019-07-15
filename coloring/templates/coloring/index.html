@@ -24,10 +24,14 @@
 			position: absolute;
 			top: 0;
 		}
-    
+    .eraser{
+      position: absolute;
+      left: 5px;
+      top: 110px;
+    }
     .bucket{
-      padding-top: 100px;
-      padding-left: 3px;
+      position: relative;
+      top: 10px;
     }
 
 		.swatch {
@@ -107,6 +111,52 @@
 	<script type="text/javascript" canvas="canvas">
 		window.onload = function() {
 			var canvas = document.getElementById('myCanvas');
+    const modalAddBtn = $('.btn-success');
+    const palBtn1 = $('.pb1');
+    const palBtn2 = $('.pb2');
+    const palBtn3 = $('.pb3');
+    let lastFilled = 'palBtn3';
+    var activeColor;
+  palBtn1.on('click', () =>{
+    palBtn2.css("outline-width", "thin");
+    palBtn3.css("outline-width", "thin");
+    palBtn1.css("outline-width", "thick");
+    activeColor = palBtn1.css("background-color");
+    console.log(activeColor);
+  })
+  
+  palBtn2.on('click', () =>{
+    palBtn1.css("outline-width", "thin");
+    palBtn3.css("outline-width", "thin");
+    palBtn2.css("outline-width", "thick");
+    activeColor = palBtn2.css("background-color");
+     console.log(activeColor);
+  })
+  
+  palBtn3.on('click', () =>{
+    palBtn1.css("outline-width", "thin");
+    palBtn2.css("outline-width", "thin");
+    palBtn3.css("outline-width", "thick");
+    activeColor = palBtn3.css("background-color");
+    console.log(activeColor);
+  })
+  
+  modalAddBtn.on('click', ()=>{
+    let color = $("#colorPicker").val();
+    if(lastFilled === 'palBtn3'){
+      let color = $("#colorPicker").val();
+      palBtn1.css("background-color", color);
+      lastFilled = 'palBtn1';
+    } else if(lastFilled === 'palBtn1'){
+      let color = $("#colorPicker").val();
+      palBtn2.css("background-color", color);
+      lastFilled = 'palBtn2';
+    }else if(lastFilled === 'palBtn2'){
+      let color = $("#colorPicker").val();
+      palBtn3.css("background-color", color);
+      lastFilled = 'palBtn3';
+    }
+  })
 
 			// coloring page
 			var mandala = {
@@ -124,13 +174,12 @@
 
 			function myCustomInteraction() {
 				var tool = new paper.Tool();
-        var myCircle = new Path.Circle(new Point(100, 70), 50);
-myCircle.fillColor = 'black';
+       
 
 				tool.onMouseDown = function (event) {
 				    var hit = mandala.item.hitTest(event.point, { tolerance: 10, fill: true });
 				    if (hit) {
-				        hit.item.fillColor = cp.history[cp.history.length - 1];
+				        hit.item.fillColor = activeColor;
 				    }
 				}
 			}
@@ -173,11 +222,9 @@ myCircle.fillColor = 'black';
 					mandala.item = item._children["design-freepik"];
 				    paper.project.insertLayer(0,mandala.item);
 
-				    if (custom) {
+				    
 				    	myCustomInteraction();	
-				    } else {
-				    	myGradientInteraction();
-				    }		
+				   
 					
 				}); 
 			}
@@ -199,54 +246,16 @@ myCircle.fillColor = 'black';
 <body>	
 
 	<canvas id="myCanvas" width="750px" height="750px"></canvas>
-	
-  <div class="bucket">
-    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-     viewBox="0 0 10000 10000" style="enable-background:new 0 0 10000 10000;" xml:space="preserve">
-  <g>
-    <g>
-      <path d="M445.63,151.704h-28.746C411.956,67.225,341.692,0,256,0S100.044,67.225,95.116,151.704H66.37
-        c-5.236,0-9.481,4.245-9.481,9.482v47.407c0,5.236,4.245,9.482,9.481,9.482H86.74l46.121,285.954
-        c0.741,4.595,4.708,7.972,9.361,7.972h227.556c4.653,0,8.62-3.377,9.361-7.972l46.121-285.954h20.369
-        c5.236,0,9.481-4.245,9.481-9.482v-47.407C455.111,155.949,450.866,151.704,445.63,151.704z M256,18.963
-        c75.232,0,136.971,58.728,141.871,132.741H114.129C119.029,77.691,180.768,18.963,256,18.963z M361.704,493.037H150.296
-        l-44.347-274.963h300.102L361.704,493.037z M436.148,199.111h-18.963H94.815H75.852v-28.444h360.296V199.111z"/>
-    </g>
-  </g>
-  <g>
-  </g>
-  <g>
-  </g>
-  <g>
-  </g>
-  <g>
-  </g>
-  <g>
-  </g>
-  <g>
-  </g>
-  <g>
-  </g>
-  <g>
-  </g>
-  <g>
-  </g>
-  <g>
-  </g>
-  <g>
-  </g>
-  <g>
-  </g>
-  <g>
-  </g>
-  <g>
-  </g>
-  <g>
-  </g>
-  </svg>
-
-
-  </div>
+  
+  <div class='eraser'>
+    <img src="https://image.flaticon.com/icons/svg/1955/1955656.svg" style="width:50px;">
+     <div class='bucket'>
+      <img src="https://image.flaticon.com/icons/svg/206/206075.svg" style="width:50px;">
+      </div>
+   </div>
+ 
+	  
+  
   <div class="right-align">
     <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#myModal">
       +Add Color
@@ -286,7 +295,7 @@ myCircle.fillColor = 'black';
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-success" data-dismiss="modal">
-          +Add Color To Pallete
+          +Add Color To Palette
         </button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
@@ -303,12 +312,37 @@ myCircle.fillColor = 'black';
 </html>
 
 <script>
+  /*
   const modalAddBtn = $('.btn-success');
   const palBtn1 = $('.pb1');
   const palBtn2 = $('.pb2');
   const palBtn3 = $('.pb3');
   let lastFilled = 'palBtn3';
   var activeColor;
+  /*var canvas = document.getElementById('myCanvas');
+ 			// coloring page
+	var mandala = {
+				item: null,
+				lastClicked: null,
+				filePath: '/static/coloring/images/mandala-freepik.svg'
+			};	
+  function init(){
+      paper.setup(canvas);
+      getColorsCreatePalette();
+      paper.project.importSVG(mandala.filePath, function(item) { 
+        mandala.item = item._children["design-freepik"];
+        paper.project.insertLayer(0,mandala.item);
+				}
+			}); 
+
+  var tool = new paper.Tool();
+ 			tool.onMouseDown = function (event) {
+		    var hit = mandala.item.hitTest(event.point, { tolerance: 10, fill: true });
+		    if (hit) {
+				  hit.item.fillColor = activeColor
+				}
+  
+ 
   
   palBtn1.on('click', () =>{
     palBtn2.css("outline-width", "thin");
@@ -350,4 +384,5 @@ myCircle.fillColor = 'black';
       lastFilled = 'palBtn3';
     }
   })
+   */
 </script>
