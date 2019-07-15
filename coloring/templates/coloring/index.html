@@ -4,17 +4,13 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  	<title>P3 Coloring</title>
-
+  <title>Color</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <link rel='stylesheet' href='spectrum.css' />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-  
 	<script type="text/javascript" src="{% static 'coloring/vendors/jquery/jquery-3.3.1.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'coloring/vendors/paper/paper-full.min.js' %}"></script>
  
-
 	<style type="text/css">
 		#color-palette {
 			width: 300px;
@@ -94,15 +90,13 @@
     text-align: center;
     font-size: 12px;
     line-height: 1.42857;
-  }
+     }
     .pb1{
       background-color: white;
     }
-    
     .pb2{
       background-color: white;
     }
-    
     .pb3{
       background-color: white;
     }
@@ -117,6 +111,7 @@
     const palBtn3 = $('.pb3');
     let lastFilled = 'palBtn3';
     var activeColor;
+      
   palBtn1.on('click', () =>{
     palBtn2.css("outline-width", "thin");
     palBtn3.css("outline-width", "thin");
@@ -262,19 +257,19 @@
     </button>
     <div class="btn-position">
       <button type="button" class="pb1 btn btn-default btn-circle btn-xl b1"> 
-        color 1
+        
       </button>
     </div>
     
     <div class="btn-position">
       <button type="button" class="pb2 btn btn-default btn-circle btn-xl b2"> 
-        color 2
+       
       </button>
     </div>
     
     <div class="btn-position">
       <button type="button" class="pb3 btn btn-default btn-circle btn-xl b3"> 
-        color 3
+       
       </button>
     </div>
   </div>
@@ -303,86 +298,6 @@
 
   </div>
 </div>
-  
-  
-    
-  
- 
 </body>
 </html>
 
-<script>
-  /*
-  const modalAddBtn = $('.btn-success');
-  const palBtn1 = $('.pb1');
-  const palBtn2 = $('.pb2');
-  const palBtn3 = $('.pb3');
-  let lastFilled = 'palBtn3';
-  var activeColor;
-  /*var canvas = document.getElementById('myCanvas');
- 			// coloring page
-	var mandala = {
-				item: null,
-				lastClicked: null,
-				filePath: '/static/coloring/images/mandala-freepik.svg'
-			};	
-  function init(){
-      paper.setup(canvas);
-      getColorsCreatePalette();
-      paper.project.importSVG(mandala.filePath, function(item) { 
-        mandala.item = item._children["design-freepik"];
-        paper.project.insertLayer(0,mandala.item);
-				}
-			}); 
-
-  var tool = new paper.Tool();
- 			tool.onMouseDown = function (event) {
-		    var hit = mandala.item.hitTest(event.point, { tolerance: 10, fill: true });
-		    if (hit) {
-				  hit.item.fillColor = activeColor
-				}
-  
- 
-  
-  palBtn1.on('click', () =>{
-    palBtn2.css("outline-width", "thin");
-    palBtn3.css("outline-width", "thin");
-    palBtn1.css("outline-width", "thick");
-    activeColor = palBtn1.css("background-color");
-    console.log(activeColor);
-  })
-  
-  palBtn2.on('click', () =>{
-    palBtn1.css("outline-width", "thin");
-    palBtn3.css("outline-width", "thin");
-    palBtn2.css("outline-width", "thick");
-    activeColor = palBtn2.css("background-color");
-     console.log(activeColor);
-  })
-  
-  palBtn3.on('click', () =>{
-    palBtn1.css("outline-width", "thin");
-    palBtn2.css("outline-width", "thin");
-    palBtn3.css("outline-width", "thick");
-    activeColor = palBtn3.css("background-color");
-    console.log(activeColor);
-  })
-  
-  modalAddBtn.on('click', ()=>{
-    let color = $("#colorPicker").val();
-    if(lastFilled === 'palBtn3'){
-      let color = $("#colorPicker").val();
-      palBtn1.css("background-color", color);
-      lastFilled = 'palBtn1';
-    } else if(lastFilled === 'palBtn1'){
-      let color = $("#colorPicker").val();
-      palBtn2.css("background-color", color);
-      lastFilled = 'palBtn2';
-    }else if(lastFilled === 'palBtn2'){
-      let color = $("#colorPicker").val();
-      palBtn3.css("background-color", color);
-      lastFilled = 'palBtn3';
-    }
-  })
-   */
-</script>
